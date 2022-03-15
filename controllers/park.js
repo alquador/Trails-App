@@ -2,7 +2,7 @@
 const express = require('express')
 const Park = require('../models/park')
 require("dotenv").config()
-const axios = require('axios').default
+const axios = require('axios')
 //import fetch from "node-fetch"
 // Create router
 const router = express.Router()
@@ -26,27 +26,29 @@ const fetch = require('node-fetch')
 // index ALL
 router.get('/', (req, res) => {
 	let fullName
-	const stateCode = 'md'
+	const stateCode = 'co'
 	console.log(stateCode)
+	console.log('after state code')
 	const requestUrl = `https://developer.nps.gov/api/v1/parks?stateCode=md&api_key=3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6`
 	//const requestUrl2 = 'https://3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6@developer.nps.gov/api/v1/parks?parkCode=acad'
 	console.log(requestUrl)
     //find the parks
-	axios.get (requestUrl)
+	axios.get(requestUrl)
     //then render a template AFTER they're found
-		.then((responseData) => {
+		.then(responseData => {
 			//const username = req.session.username
 			//const loggedIn = req.session.loggedIn
 			//console.log(parks)
 			//const parksTest = { fullName: 'TEST', description: 'TESTDATA'}
 			//res.render('parks/index', { parks, username, loggedIn, parksTest })
 			//res.send('test')
-			console.log(responseData.json())
-			return responseData.json()	
+			console.log('first .then', responseData)
+			return responseData	
 		})
-		.then((jsonData) => {
-			fullName = jsonData.fullName
-			console.log(jsonData)
+		.then(jsonData => {
+			console.log(jsonData.data.data[0].fullName)
+			fullName = jsonData.data.data
+			console.log('second .then')
 			res.render('parks/index', { parks: fullName })
 		})
 		.catch(error => {
