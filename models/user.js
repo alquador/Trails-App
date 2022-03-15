@@ -1,5 +1,4 @@
 
-  
 // import what I need
 const { Schema, model } = require('./connection.js')
 

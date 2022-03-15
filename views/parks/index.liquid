@@ -1,0 +1,21 @@
+{% layout 'layout.liquid'%}
+{% block content %}
+<div>
+    <h2 class="display-6">All Parks</h2>
+    <div class="row">
+        {% for park in parks %}
+        <div class="card" style="width: 18rem;">
+            <h5 class="card-header">{{ park.fullName }}</h5>
+            <div class="card-body">
+                <p class="card-text">
+                    Description: {{ park.description }}
+                </p>
+                <a href="/parks/{{ park.id }}" class="btn btn-info">
+                    View {{ park.fullName }}
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

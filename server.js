@@ -4,9 +4,15 @@
 require("dotenv").config() // make env variables available
 const express = require("express")
 const middleware = require('./utils/middleware')
-const ExampleRouter = require('./controllers/example')
+
+//const nodeFetch = require('node-fetch')
+
+
 const UserRouter = require('./controllers/user')
 const User = require("./models/user")
+const HomeRouter = require('./controllers/home')
+const ParksRouter = require('./controllers/park')
+const CommentRouter = require('./controllers/comment')
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
 
@@ -21,8 +27,12 @@ middleware(app)
 //    Routes      //
 ////////////////////
 
-app.use('/auth', UserRouter)
-app.use('/examples', ExampleRouter)
+app.use('/', HomeRouter)
+app.use('/parks', ParksRouter)
+app.use('/comment', CommentRouter)
+app.use('/user', UserRouter)
+
+
 
 app.get('/', (req, res) => {
     const { username, userId, loggedIn } = req.session
@@ -36,9 +46,9 @@ app.get('/error', (req, res) => {
 })
 
 // if page is not found, send to error page
-app.all('*', (req, res) => {
-	res.redirect('/error')
-})
+//app.all('*', (req, res) => {
+	//res.redirect('/error')
+//})
 
 
 

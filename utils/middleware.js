@@ -1,12 +1,3 @@
-const auth = (req, res, next) => {
-	if (req.session.loggedIn) {
-		next()
-	} else {
-		res.redirect('/auth/login')
-	}
-}
-
-module.exports = { auth }
 
 /////////////////////////////////
 // Dependencies
@@ -17,6 +8,8 @@ const morgan = require('morgan')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
+const ParksRouter = require('../controllers/park')
+const UserRouter = require('../controllers/user')
 
 /////////////////////////////////
 // Middleware function
@@ -35,6 +28,15 @@ const middleware = (app) => {
 		})
 	)
 }
+const auth = (req, res, next) => {
+	if (req.session.loggedIn) {
+		next()
+	} else {
+		res.redirect('/auth/login')
+	}
+}
+
+module.exports = { auth }
 
 ///////////////////////////////////////////
 // export our Middleware function
