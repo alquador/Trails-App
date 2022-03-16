@@ -65,7 +65,7 @@ router.post('/login', async (req, res) => {
 					req.session.username = user.username
 					req.session.loggedIn = true
 					req.session.userId = user.id
-					
+
           			const { username, loggedIn, userId } = req.session
 
 					console.log('session user id', req.session.userId)

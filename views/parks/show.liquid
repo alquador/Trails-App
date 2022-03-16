@@ -2,22 +2,16 @@
 {% block content %}
 
     <div class="container-md">
-    <article>
         {% for park in parks %}
-        <h2>
-            {{ park.fullName }} 
-        </h2>
-        <h5 class="card-title">
-            Image: {{ park.images }}
-        </h5>
-        <h6>Body: {{ park.body }}</h6>
-        <p class="card-text">
-            Activities: {{ park.activities.name }}
-        </p>
-        <p class="card-text">
-            Entrance Fees: {{ park.entranceFees }}
-        </p>
-        {% endfor %}
+        <div class="card mb-3">
+            <img src="{{ park.images.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{ park.fullName }}</h5>
+              <p class="card-text">Park Activities: {{ park.acitivites.name }}</p>
+              <p class="card-text"><small class="text-muted">Entrance Fees: {{ park.entranceFees }}</small></p>
+            </div>
+            {% endfor %}
+          </div>
         <div class="col-md-6">
             <form action="/comments/{{park.id}}" method="POST">
                 <fieldset>

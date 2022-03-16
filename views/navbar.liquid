@@ -1,11 +1,11 @@
 {% block content %}
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark" style="background-color: #7bc3f7;">
     <div class="container-fluid">
         
         {% if loggedIn %}
         <a href="/parks/mine" class="nav-link text-light">Hello {{ username }} </a>
         {% endif %}
-        <a href="/" class="navbar-brand">National Parks</a>
+        <a href="/parks" class="navbar-brand">National Parks</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
