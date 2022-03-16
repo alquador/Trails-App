@@ -7,6 +7,7 @@ const axios = require('axios')
 // Create router
 const router = express.Router()
 const fetch = require('node-fetch')
+const { json } = require('express/lib/response')
 // Router Middleware
 // Authorization middleware
 // If you have some resources that should be accessible to everyone regardless of loggedIn status, this middleware can be moved, commented out, or deleted. 
@@ -29,7 +30,7 @@ router.get('/', (req, res) => {
 	const stateCode = 'co'
 	console.log(stateCode)
 	console.log('after state code')
-	const requestUrl = `https://developer.nps.gov/api/v1/parks?stateCode=md&api_key=3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6`
+	const requestUrl = `https://developer.nps.gov/api/v1/parks?stateCode=co&api_key=3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6`
 	//const requestUrl2 = 'https://3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6@developer.nps.gov/api/v1/parks?parkCode=acad'
 	console.log(requestUrl)
     //find the parks
@@ -119,13 +120,35 @@ router.put('/:id', (req, res) => {
 
 // show route
 router.get('/:id', (req, res) => {
+	let fullName
+	let images
+	let activities
 	const parkId = req.params.id
-	Park.findById(parkId)
-		.then((park) => {
-            const {username, loggedIn, userId} = req.session
-			res.render('parks/show', { park, username, loggedIn, userId })
+	const requestUrl = `https://developer.nps.gov/api/v1/parks?stateCode=co&api_key=3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6`
+	axios.get(requestUrl)
+    //then render a template AFTER they're found
+		.then(responseData => {
+			//const username = req.session.username
+			//const loggedIn = req.session.loggedIn
+			//console.log(parks)
+			//const parksTest = { fullName: 'TEST', description: 'TESTDATA'}
+			//res.render('parks/index', { parks, username, loggedIn, parksTest })
+			//res.send('test')
+			console.log('first .then', responseData)
+			return responseData	
 		})
-		.catch((error) => {
+		.then(jsonData => {
+			console.log(jsonData.data.data[0].fullName)
+			//console.log(jsonData.data.data[0].images)
+			fullName = jsonData.data.data
+			//activities = jsonData.data.data.activities.name
+			console.log(jsonData.data.data[0].activities[0].name)
+			//console.log(JSON.parse(jsonData.data.data.activities.name))
+			//images = jsonData.data.data
+			console.log('second .then')
+			res.render('parks/show', { parks: fullName })
+		})
+		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
