@@ -2,45 +2,25 @@
 {% block content %}
 
     <div class="container-md">
-        {% for park in parks %}
-        <div class="card mb-3">
-            <img src="{{ park.images.url }}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">{{ park.fullName }}</h5>
-              <p class="card-text">Park Activities: {{ park.acitivites.name }}</p>
-              <p class="card-text"><small class="text-muted">Entrance Fees: {{ park.entranceFees }}</small></p>
-            </div>
-            {% endfor %}
-          </div>
-        <div class="col-md-6">
-            <form action="/comments/{{park.id}}" method="POST">
-                <fieldset>
-                    <legend>Add Comment</legend>
-                    <label class="form-label">Comment: </label>
-                    <input type="text" class="form-control" name="note" placeholder="enter comment here...">
-                </fieldset>
-                <input type="submit" class="btn btn-success" value="Add Comment">
-            </form>
-        </div>
-        {% if park.comments.length > 0 %}
-            <div class="container-sm justify-content-center">
-                <div class="col-md-8 col-lg-6">
-                    <!-- here we need to loop over the comments -->
-                    <!-- for every comment render a comment.liquid block -->
-                    {% for comment in park.comments %}
-                        {% render '../comment.liquid', comment: comment, userId: userId, fruit: fruit %}
-                    {% endfor %}
+              <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    {% for images in park.images %}
+                      <img src="{{ park.images[0].url }}" class="d-block w-100">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="{{ park.images[1].url }}" class="d-block w-100">
                 </div>
+                {% endfor %}
+              </div>
+            <div class="card-body">
+              <h5 class="card-title">Park Name: {{ park.fullName }}</h5>
+              Park Activities:{% for activity in park.activities %}
+              <p class="card-text">{{ activity.name }}</p> 
+              {% endfor %}
+              <!-- <p class="card-text"><small class="text-muted">Entrance Fees: {{ park.entranceFees }}</small></p> -->
             </div>
-        {% endif %}
-        {% if park.owner == userId %}
-        <div class="btn-group">
-            <a href="/parks/{{ park.id }}/edit" class="btn btn-primary">Edit</a>
-            <form action="/examples/{{ example.id }}?_method=DELETE" method="POST">
-                <input type="submit" value="Delete" class="btn btn-danger">
-            </form>
-        </div>
-        {% endif %}
-    </article>
+            
+
 </div>
 {% endblock %}

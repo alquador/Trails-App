@@ -5,6 +5,7 @@
         {% if loggedIn %}
         <a href="/parks/mine" class="nav-link text-light">Hello {{ username }} </a>
         {% endif %}
+        <a href="/" class="navbar-brand">Home Page</a>
         <a href="/parks" class="navbar-brand">National Parks</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,7 +14,7 @@
             {% if loggedIn %}
                 <a href="/parks" class="nav-link text-light">View All</a>
                 <a href="/parks/new" class="nav-link text-light">New</a>
-                <a href="/parks/mine" class="nav-link text-light">My Examples</a>
+                <a href="/parks/mine" class="nav-link text-light">My Saved Parks</a>
                 <a href="/auth/logout" class="nav-link text-light">Log Out</a>
             {% else %}
                 <a href="/auth/signup" class="nav-link text-light">Sign Up</a>
