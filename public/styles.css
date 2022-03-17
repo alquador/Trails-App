@@ -4,9 +4,25 @@
     background-repeat: no-repeat;
 }
 .card-text, .card-header, .card-body {
-    color: blue;
+    color: whitesmoke;
 }
 .card-img-top {
-    height: 500px;
-    width: 1000px;
+    height: 400px;
+    width: 750px;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    display: block;
+    margin-top: 10px;
+}
+.container-md {
+    color: whitesmoke;
+}
+#show-page-div {
+    background-color: lightblue;
+    text-align: center;
+}
+#index-page-div {
+    color: black;
 }

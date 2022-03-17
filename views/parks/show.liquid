@@ -1,14 +1,17 @@
 {% layout 'layout.liquid' %}
 {% block content %}
 
-    <div class="container-md">
+    <div class="container-md" id="show-page-div">
             <img src="{{ park.images[0].url }}" class="card-img-top">
             <div class="card-body">
-              <h5 class="card-title">Park Name: {{ park.fullName }}</h5>
-              Park Activities:{% for activity in park.activities %}
-              <p class="card-text">{{ activity.name }}</p> 
-              {% endfor %}
-            </div>
+              <h1 class="card-title">{{ park.fullName }}</h1>
+             </div>
+             <div class ="table-responsive-md"></div>
+             Park Activities:<table class="table"></table>{% for activity in park.activities %}
+             <tr>{{ activity.name }}</tr>
+             {% endfor %}
+             </table>
+           </div>
             <div class="col-md-6">
                 <form action="/comments/{{park.id}}" method="POST">
                     <fieldset>
@@ -32,10 +35,9 @@
             {% endif %}
             {% if park.owner == userId %}
             <div class="btn-group">
-                <a href="/parks/{{ park.id }}/edit" class="btn btn-primary">Edit</a>
-                <form action="/parks/{{ park.id }}?_method=DELETE" method="POST">
-                    <input type="submit" value="Delete" class="btn btn-danger">
-                </form>
+                <form action="/parks/{{ park.parkCode }}" class="btn btn-primary" method="POST">
+                    <input type="submit" value="Add to Favorite Parks">
+                    </form>
             </div>
             {% endif %}
         </article>

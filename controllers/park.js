@@ -91,7 +91,9 @@ router.post('/:stateCode', (req, res) => {
 		})
 })
 
-// index that shows only the user's examples
+// index that shows the user's saved favorite parks
+//Maybe I need a GET route that links to my database....
+//saves or POSTs to /parks/mine route...
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
@@ -111,7 +113,9 @@ router.get('/new', (req, res) => {
 })
 
 // create -> POST route that actually calls the db and makes a new document
-router.post('/', (req, res) => {
+
+//I want this new document to be the "favorite parks" that the user selects to save.
+router.post('/mine', (req, res) => {
 	req.body.ready = req.body.ready === 'on' ? true : false
 
 	req.body.owner = req.session.userId
@@ -192,7 +196,19 @@ router.get('/:id', (req, res) => {
 			let entranceFees = jsonData.data.data[0].entranceFees
 			console.log('ENTRANCE FEES', entranceFees)
 			//console.log('second .then')
+			//console.log(Park.find({}))
 			res.render('parks/show', { park: park})
+		})
+		.catch(error => {
+			res.redirect(`/error?error=${error}`)
+		})
+})
+router.post('/mine', (req, res) => {
+    // destructure user info from req.session
+    const { username, userId, loggedIn } = req.session
+	Park.find({ owner: userId })
+		.then((parks) => {
+			res.redirect('/:id', { parks, username, loggedIn })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
