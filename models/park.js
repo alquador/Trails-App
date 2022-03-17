@@ -13,10 +13,10 @@ const { Schema, model } = mongoose
 const parkSchema = new Schema(
 	{
 		fullName: { type: String, required: true },
-		images: { type: String, required: true },
-		description: { type: String, required: true },
-		activities: { type: String, required: true },
-		entranceFees: { type: Number, required: true },
+		npsId: { type: String },
+		images: { type: String },
+		description: { type: String },
+		activities: { type: String },
 		owner: {
 			type: Schema.Types.ObjectID,
 			ref: 'User',

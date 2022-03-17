@@ -19,6 +19,8 @@
                         <label class="form-label">Comment: </label>
                         <input type="text" class="form-control" name="note" placeholder="enter comment here...">
                     </fieldset>
+                    <input type="hidden" name="fullName" value="{{ park.fullName }}">
+                    <input type="hidden" name="npsId" value="{{ park.id }}">
                     <input type="submit" class="btn btn-success" value="Add Comment">
                 </form>
             </div>
@@ -35,7 +37,8 @@
             {% endif %}
             {% if park.owner == userId %}
             <div class="btn-group">
-                <form action="/parks/{{ park.parkCode }}" class="btn btn-primary" method="POST">
+                <form action="/parks" class="btn btn-primary" method="POST">
+                    <input type="hidden" name="name" value="{{ park.fullName }}">
                     <input type="submit" value="Add to Favorite Parks">
                     </form>
             </div>

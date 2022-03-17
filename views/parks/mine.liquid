@@ -1,0 +1,15 @@
+{% layout 'layout.liquid'%}
+{% block content %}
+<div id="my-page-div">
+    <h2 class="display-6">My Parks</h2>
+    <div class="row">
+        {% for park in parks %}
+        <div class="card" style="width: 18rem;">
+            <h5 class="card-header">{{ park.fullName }}</h5>
+            <div class="card-body">
+                <p class="card-text">
+                    Description: {{ park.description }}
+                </p>
+        {% endfor %}        
+</div>
+{% endblock %}

@@ -30,10 +30,12 @@ router.post('/:parkId', (req, res) => {
     req.body.author = req.session.userId
     console.log('updated comment body', req.body)
     // we'll find the fruit with the fruitId
-    Park.findById(parkId)
+    //find one by id and then if it doesn't exist create it
+    //then push comment into the comments array
+    Park.findOneAndUpdate({npsId: parkId}, { fullName: req.body.fullName }, { new: true, upsert: true })
         .then(park => {
             // then we'll send req.body to the comments array
-            park.comments.push(req.body)
+            park.comments.push(req.body.comment)
             // save the fruit
             return park.save()
         })
