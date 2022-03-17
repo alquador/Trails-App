@@ -9,7 +9,7 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const ParksRouter = require('../controllers/park')
-const UserRouter = require('../controllers/user')
+const UserRouter = require('../controllers/auth')
 
 /////////////////////////////////
 // Middleware function

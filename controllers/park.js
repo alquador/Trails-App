@@ -158,8 +158,8 @@ router.get('/:id', (req, res) => {
 	console.log('this is the example URL', exampleUrl)
 	let images
 	let activities
+	let entranceFees
 	const parkId = req.params.id
-	
 	const requestUrl = `https://developer.nps.gov/api/v1/parks?parkCode=${parkId}&api_key=3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6`
 	axios.get(requestUrl)
 		.then(responseData => {
@@ -189,6 +189,8 @@ router.get('/:id', (req, res) => {
 			//console.log(JSON.parse(jsonData.data.data.activities.name))
 			//console.log('This is the image for a specific park:', jsonData.data.data[0].images[0].url)
 			let images = jsonData.data.data[0].images[0].url
+			let entranceFees = jsonData.data.data[0].entranceFees
+			console.log('ENTRANCE FEES', entranceFees)
 			//console.log('second .then')
 			res.render('parks/show', { park: park})
 		})

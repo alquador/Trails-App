@@ -8,7 +8,7 @@ const middleware = require('./utils/middleware')
 //const nodeFetch = require('node-fetch')
 
 
-const UserRouter = require('./controllers/user')
+const UserRouter = require('./controllers/auth')
 const User = require("./models/user")
 const HomeRouter = require('./controllers/home')
 const ParksRouter = require('./controllers/park')
@@ -29,8 +29,8 @@ middleware(app)
 
 app.use('/', HomeRouter)
 app.use('/parks', ParksRouter)
-app.use('/comment', CommentRouter)
-app.use('/user', UserRouter)
+app.use('/comments', CommentRouter)
+app.use('/auth', UserRouter)
 
 
 

@@ -19,7 +19,10 @@ const router = express.Router()
 // only need two routes for comments right now
 // POST -> to create a comment
 router.post('/:parkId', (req, res) => {
-    const parkId = req.params.parkId
+    const parkId = (req.params.parkId)
+    //const parkId = Park.findById(req.params.parkId)
+    //JSON.stringify(parkId)
+    console.log('IS THIS A VALID OBJECT ID:', mongoose.Types.ObjectId.isValid('2B14155F-0E31-43F3-8B87-8B1DA6FA0BF7'))
     console.log('first comment body', req.body)
     
     // we'll adjust req.body to include an author
@@ -36,6 +39,7 @@ router.post('/:parkId', (req, res) => {
         })
         .then(park => {
             // redirect
+            console.log('LAST .THEN park.id', park.id)
             res.redirect(`/parks/${park.id}`)
         })
         // or show an error if we have one
