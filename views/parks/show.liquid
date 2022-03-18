@@ -12,29 +12,8 @@
              {% endfor %}
              </table>
            </div>
-            <div class="col-md-6 justify-content-center">
-                <form action="/comments/{{park.id}}" method="POST">
-                    <fieldset class="form-label">
-                        <legend>Add Comment</legend>
-                        <label class="form-label">Comment: </label>
-                        <input type="text" class="form-control" name="note" placeholder="enter comment here...">
-                    </fieldset>
-                    <input type="hidden" name="fullName" value="{{ park.fullName }}">
-                    <input type="hidden" name="npsId" value="{{ park.id }}">
-                    <input type="submit" class="btn btn-success" value="Add Comment">
-                </form>
-            </div>
-            {% if park.comments.length > 0 %}
-                <div class="container-sm justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        <!-- here we need to loop over the comments -->
-                        <!-- for every comment render a comment.liquid block -->
-                        {% for comment in park.comments %}
-                            {% render '../comment.liquid', comment: comment, userId: userId, park: park %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
+
+            <!-- here is my hidden form action for adding parks to favorite parks page -->
             {% if park.owner == userId %}
            <br><div class="btn-group">
                 <form action="/parks" class="btn btn-primary" method="POST">
