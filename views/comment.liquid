@@ -1,11 +1,10 @@
-{% layout 'layout.liquid' %}
 {% block content %}
     <div class="card mb-4 shadow">
         <div class="card-body">
             <p>{{ comment.note }}</p>
             <div class="d-flex justify-content-between">
-                <small>author: {{ comment.author.username }}</small>
-                {% if comment.author == userId %}
+                <small>author: {{ username }}</small>
+                {% if username == username %}
                     <form action="/comments/delete/{{ park.id }}/{{ comment._id }}?_method=DELETE" method="POST">
                         <input type="submit" value="X">
                     </form>
