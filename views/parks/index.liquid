@@ -1,6 +1,22 @@
 {% layout 'layout.liquid'%}
 {% block content %}
-<div id="index-page-div">
+<div class="card text-center">
+    {% for park in parks %}
+    <div class="card-header">
+        {{ park.fullName }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Park Description:</h5>
+      <p class="card-text">{{ park.description }}</p>
+      <a href="/parks/{{ park.parkCode }}" class="btn btn-success">View {{ park.fullName }}</a>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+<!-- <div id="index-page-div">
     <h2 class="display-6">All Parks</h2>
     <div class="row">
         {% for park in parks %}
@@ -17,5 +33,4 @@
         </div>
         {% endfor %}
     </div>
-</div>
-{% endblock %}
+</div> -->

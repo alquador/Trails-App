@@ -12,9 +12,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             {% if loggedIn %}
-                <a href="/parks" class="nav-link text-light">View All</a>
-                <a href="/parks/new" class="nav-link text-light">New</a>
-                <a href="/parks/mine" class="nav-link text-light">My Saved Parks</a>
                 <a href="/auth/logout" class="nav-link text-light">Log Out</a>
             {% else %}
                 <a href="/auth/signup" class="nav-link text-light">Sign Up</a>

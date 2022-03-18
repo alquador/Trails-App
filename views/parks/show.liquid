@@ -12,9 +12,9 @@
              {% endfor %}
              </table>
            </div>
-            <div class="col-md-6">
+            <div class="col-md-6 justify-content-center">
                 <form action="/comments/{{park.id}}" method="POST">
-                    <fieldset>
+                    <fieldset class="form-label">
                         <legend>Add Comment</legend>
                         <label class="form-label">Comment: </label>
                         <input type="text" class="form-control" name="note" placeholder="enter comment here...">
@@ -36,10 +36,13 @@
                 </div>
             {% endif %}
             {% if park.owner == userId %}
-            <div class="btn-group">
+           <br><div class="btn-group">
                 <form action="/parks" class="btn btn-primary" method="POST">
                     <input type="hidden" name="name" value="{{ park.fullName }}">
-                    <input type="submit" value="Add to Favorite Parks">
+                    <input type="hidden" name="image" value="{{ park.images[0].url }}">
+                    <input type="hidden" name="parkId" value="{{ parkId }}">
+                    <input type="hidden" name="description" value="{{ park.description }}">
+                    <input type="submit" class="btn btn-primary" value="Add to Favorite Parks">
                     </form>
             </div>
             {% endif %}

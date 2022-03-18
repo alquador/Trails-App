@@ -33,6 +33,7 @@ const exampleUrl = `${reqUrlFront}${selectedPark}${reqUrlApiKey}`
 // Routes
 
 // index ALL
+//this route is displaying the query result from the user entering a state code
 router.get('/', (req, res) => {
 	//console.log('this is the example URL', exampleUrl)
 	let stateCode = req.query.stateCode
@@ -40,14 +41,13 @@ router.get('/', (req, res) => {
 	console.log(stateCode)
 	console.log('after state code')
 	const requestUrl = `https://developer.nps.gov/api/v1/parks?stateCode=${stateCode}&api_key=3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6`
-	//const requestUrl2 = 'https://3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6@developer.nps.gov/api/v1/parks?parkCode=acad'
 	//console.log(requestUrl)
     //find the parks
 	axios.get(requestUrl)
     //then render a template AFTER they're found
 		.then(responseData => {
-			//const username = req.session.username
-			//const loggedIn = req.session.loggedIn
+			const username = req.session.username
+			const loggedIn = req.session.loggedIn
 			//console.log(parks)
 			//const parksTest = { fullName: 'TEST', description: 'TESTDATA'}
 			//res.render('parks/index', { parks, username, loggedIn, parksTest })
@@ -56,9 +56,9 @@ router.get('/', (req, res) => {
 			return responseData	
 		})
 		.then(jsonData => {
-			console.log(jsonData.data.data[0].fullName)
+			//console.log(jsonData.data.data[0].fullName)
 			fullName = jsonData.data.data
-			console.log('second .then')
+			//console.log('second .then')
 			res.render('parks/index', { parks: fullName })
 		})
 		.catch(error => {
@@ -72,15 +72,19 @@ router.get('/', (req, res) => {
 router.get('/mine', (req, res) => {
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
+	console.log(req.session)
+	console.log(userId)
 	Park.find({ owner: userId })
 		.then((parks) => {
-			res.render('parks/index', { parks, username, loggedIn })
+			console.log(parks)
+			res.render('parks/mine', { parks, username, userId, loggedIn })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
 
+//use this to put the comment here...
 // update route
 router.put('/:id', (req, res) => {
 	const parkId = req.params.id
@@ -96,9 +100,10 @@ router.put('/:id', (req, res) => {
 })
 
 // show route
+//this route displays all of the parks from the particular state code
 router.get('/:id', (req, res) => {
 	let fullName
-	console.log('this is the example URL', exampleUrl)
+	//console.log('this is the example URL', exampleUrl)
 	let images
 	let activities
 	let entranceFees
@@ -111,24 +116,34 @@ router.get('/:id', (req, res) => {
 		//Park.findById(parkId)
 		.then(jsonData => {
 			const park = jsonData.data.data[0]
-			console.log('this is the park', jsonData.data)
+			//console.log('this is the park', jsonData.data)
 			let activities = jsonData.data.data.activities
 			let images = jsonData.data.data[0].images[0].url
 			let entranceFees = jsonData.data.data[0].entranceFees
-			console.log('ENTRANCE FEES', entranceFees)
+			//console.log('ENTRANCE FEES', entranceFees)
 			//console.log(Park.find({}))
-			res.render('parks/show', { park: park})
+			console.log(typeof parkId)
+			res.render('parks/show', { park: park, parkId})
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
+//This is the POST route that logs the selected "favorite park" from user in the db
 router.post('/', (req, res) => {
     // destructure user info from req.session
-    //const { username, userId, loggedIn } = req.session
-	Park.create({ fullName: req.body.name })
+	//parkId = req.body.parkId
+	console.log('this is the req.body.parkId', req.body.parkId)
+    const { username, userId, loggedIn } = req.session
+	Park.create({ 
+		fullName: req.body.name, 
+		images: req.body.image,
+		owner: userId,
+		description: req.body.description
+	    })
 		.then((park) => {
-			console.log('this is the park', park)
+			console.log('THIS IS THE CREATED PARK: ', park)
+			res.redirect(`/parks/${req.body.parkId}`)
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
@@ -141,7 +156,7 @@ router.delete('/:id', (req, res) => {
 	Park.findByIdAndRemove(parkId)
 		.then((park) => {
             console.log('this is the response, delete route', park)
-			res.redirect('/parks')
+			res.redirect(`/parks/${req.body.parkId}`)
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)

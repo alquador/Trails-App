@@ -4,7 +4,7 @@
     background-repeat: no-repeat;
 }
 .card-text, .card-header, .card-body {
-    color: whitesmoke;
+    color:  black;
 }
 .card-img-top {
     height: 400px;
@@ -17,12 +17,33 @@
     margin-top: 10px;
 }
 .container-md {
-    color: whitesmoke;
+    color: black;
 }
 #show-page-div {
     background-color: lightblue;
     text-align: center;
+    color: black;
+    align-items: center;
 }
 #index-page-div {
     color: black;
+}
+.card-header {
+    font-size: 30px;
+}
+.form-label {
+    color: white;
+}
+.btn-group {
+    align-items: center;
+    text-align: center;
+    align-content: center;
+}
+.card-title {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#my-parks-head {
+    text-align: center;
+    justify-content: center;
+    font-weight: bolder;
 }

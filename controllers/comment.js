@@ -36,13 +36,13 @@ router.post('/:parkId', (req, res) => {
         .then(park => {
             // then we'll send req.body to the comments array
             park.comments.push(req.body.comment)
-            // save the fruit
+            // save the user comment
             return park.save()
         })
         .then(park => {
             // redirect
             console.log('LAST .THEN park.id', park.id)
-            res.redirect(`/parks/${park.id}`)
+            res.redirect(`/parks/${req.body.parkId}`)
         })
         // or show an error if we have one
         .catch(error => {
