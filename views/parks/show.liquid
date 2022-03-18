@@ -15,7 +15,7 @@
 
             <!-- here is my hidden form action for adding parks to favorite parks page -->
             {% if park.owner == userId %}
-           <br><div class="btn-group">
+           <br><div class="d-grid gap-2 col-6 mx-auto">
                 <form action="/parks" class="btn btn-primary" method="POST">
                     <input type="hidden" name="name" value="{{ park.fullName }}">
                     <input type="hidden" name="image" value="{{ park.images[0].url }}">

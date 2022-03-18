@@ -70,6 +70,7 @@ router.get('/', (req, res) => {
 //Maybe I need a GET route that links to my database....
 //saves or POSTs to /parks/mine route...
 router.get('/mine', (req, res) => {
+	const parkId = req.params.parkId
     // destructure user info from req.session
     const { username, userId, loggedIn } = req.session
 	console.log(req.session)
@@ -77,7 +78,7 @@ router.get('/mine', (req, res) => {
 	Park.find({ owner: userId })
 		.then((parks) => {
 			console.log(parks)
-			res.render('parks/mine', { parks, username, userId, loggedIn })
+			res.render('parks/mine', { parks, parkId, username, userId, loggedIn })
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
@@ -86,7 +87,7 @@ router.get('/mine', (req, res) => {
 
 //use this to put the comment here...
 // update route
-router.put('/:id', (req, res) => {
+router.put('/mine/:id/comments', (req, res) => {
 	const parkId = req.params.id
 	req.body.ready = req.body.ready === 'on' ? true : false
 
@@ -130,6 +131,7 @@ router.get('/:id', (req, res) => {
 		})
 })
 //This is the POST route that logs the selected "favorite park" from user in the db
+//this stems from the action of the hidden form on the show page
 router.post('/', (req, res) => {
     // destructure user info from req.session
 	//parkId = req.body.parkId
@@ -143,15 +145,35 @@ router.post('/', (req, res) => {
 	    })
 		.then((park) => {
 			console.log('THIS IS THE CREATED PARK: ', park)
+			//redirecting back to the park show page
 			res.redirect(`/parks/${req.body.parkId}`)
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
-
-// delete route
-router.delete('/:id', (req, res) => {
+// //update route-sends a put request to our database
+// //Add a visit to the my parks page
+// app.put('/:id/mine/visit', (req, res) => {
+//     //get the id
+//     const productId = req.params.id
+//     //tell mongoose to update the product
+//     //$subtract qty: 1 did not work! deletes it
+//     Product.findByIdAndUpdate(parkId, { $inc: {visit: 1} })
+//     //now there needs to be a conditional statement
+//     //if quantity <= 0 OUT OF STOCK should display
+//     //if successful -> redirect to the products page
+//     .then(park => {
+//         console.log('the updated visits', park)
+//         res.redirect(`/mine/${park.id}`)
+//     })
+//     //if an error, display that
+//     .catch(err => res.json(err))
+    
+// })
+// delete route of specifically added park in the user's favorites page
+//delete route withing parks/mine....
+router.delete(('/:id'), (req, res) => {
 	const parkId = req.params.id
 	Park.findByIdAndRemove(parkId)
 		.then((park) => {

@@ -19,10 +19,12 @@ const router = express.Router()
 // only need two routes for comments right now
 // POST -> to create a comment
 router.post('/:parkId', (req, res) => {
-    const parkId = (req.params.parkId)
+    const parkId = req.params.parkId
+    //let note 
+    //let author
     //const parkId = Park.findById(req.params.parkId)
     //JSON.stringify(parkId)
-    console.log('IS THIS A VALID OBJECT ID:', mongoose.Types.ObjectId.isValid('2B14155F-0E31-43F3-8B87-8B1DA6FA0BF7'))
+    //console.log('IS THIS A VALID OBJECT ID:', mongoose.Types.ObjectId.isValid('2B14155F-0E31-43F3-8B87-8B1DA6FA0BF7'))
     console.log('first comment body', req.body)
     
     // we'll adjust req.body to include an author
@@ -32,17 +34,19 @@ router.post('/:parkId', (req, res) => {
     // we'll find the fruit with the fruitId
     //find one by id and then if it doesn't exist create it
     //then push comment into the comments array
-    Park.findOneAndUpdate({npsId: parkId}, { fullName: req.body.fullName }, { new: true, upsert: true })
+    //input field for the add comment form has a name of "note"!
+    Park.findById(parkId)
         .then(park => {
             // then we'll send req.body to the comments array
-            park.comments.push(req.body.comment)
+            park.comments.push(req.body)
+            console.log('THIS IS THE COMMENT THAT WAS PUSHED:', req.body)
             // save the user comment
             return park.save()
         })
         .then(park => {
             // redirect
-            console.log('LAST .THEN park.id', park.id)
-            res.redirect(`/parks/${req.body.parkId}`)
+            console.log('LAST .THEN park.id', park)
+            res.redirect('/parks/mine')
         })
         // or show an error if we have one
         .catch(error => {
@@ -53,7 +57,7 @@ router.post('/:parkId', (req, res) => {
 
 // DELETE -> to destroy a comment
 // we'll use two params to make our life easier
-// first the id of the fruit, since we need to find it
+// first the id of the park, since we need to find it
 // then the id of the comment, since we want to delete it
 router.delete('/delete/:parkId/:commId', (req, res) => {
     // first we want to parse out our ids
@@ -75,8 +79,8 @@ router.delete('/delete/:parkId/:commId', (req, res) => {
 
         })
         .then(park => {
-            // redirect to the fruit show page
-            res.redirect(`/parks/${parkId}`)
+            // redirect to the user's favorites page
+            res.redirect('/parks/mine')
         })
         .catch(error => {
             // catch any errors

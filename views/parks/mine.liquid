@@ -1,42 +1,47 @@
 {% layout 'layout.liquid'%}
 {% block content %}
-<div id="my-page-div">
-    <h2 class="display-6" id="my-parks-head">My Parks</h2>
-    {% for park in parks %}
-    <div class="row justify-content-center" id="card-layout">
-        <div class="card" style="width: 18rem;"  id="card-layout">
-            <h5 class="card-header"  id="card-layout">{{ park.fullName }}</h5>
-            <div class="card-body">
-                <p class="card-text">
-                    Description: {{ park.description }}
-                </p> 
-                <div class="col-md-6 justify-content-center">
-                    <form action="/comments/{{park.id}}" method="POST">
-                        <fieldset class="form-label">
-                            <legend>Add Comment</legend>
-                            <label class="form-label">Comment: </label>
-                            <input type="text" class="form-control" name="note" placeholder="enter comment here...">
-                        </fieldset>
-                        <input type="hidden" name="fullName" value="{{ park.fullName }}">
-                        <input type="hidden" name="npsId" value="{{ park.id }}">
-                        <input type="submit" class="btn btn-success" value="Add Comment">
-                    </form>
-                </div>
-                {% if park.comments.length > 0 %}
-                    <div class="container-sm justify-content-center">
-                        <div class="col-md-8 col-lg-6">
-                            <!-- here we need to loop over the comments -->
-                            <!-- for every comment render a comment.liquid block -->
-                            {% for comment in park.comments %}
-                                {% render '../comment.liquid', comment: comment, userId: userId, park: park %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-                <form action="/parks/mine/delete/?_method=DELETE" method="POST">
-                    <input type="submit" value="Delete" class="btn btn-danger">
-                </form>     
-    
-</div><br>
+<h2 class="display-6" id="my-parks-head">My Parks</h2>
+{% for park in parks %}
+<div class="card">
+    <h5 class="card-header">{{ park.fullName }}</h5>
+    <div class="card-body">
+      <h5 class="card-title">Description:</h5>
+      <p class="card-text">{{ park.description }}</p>
+      <div class="col-md-6 justify-content-center">
+         {% assign visit = 0 %}
+         {% for visit in visits %}
+            {% assign visit = visit | plus: 1 %}
+           {% endfor %} 
+           Visits: {{ visit }}
+        <form action="/comments/{{ park.id }}" method="POST">
+            <fieldset class="form-label">
+                <legend>ADD COMMENT</legend>
+                <label class="form-label">Comment: </label>
+                <input type="text" class="form-control" name="note" placeholder="enter comment here...">
+            </fieldset>
+            <input type="submit" class="btn btn-success" value="ADD COMMENT">
+        </form>
+    </div>
+    {% if park.comments.length > 0 %}
+    <div class="container-sm justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <!-- here we need to loop over the comments -->
+            <!-- for every comment render a comment.liquid block -->
+            {% for comment in parkId.comments %}
+            <h1>{{ comment }}</h1>
+                {% render '../comment.liquid', comment: comment, userId: userId, park: park %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+        <br><form action="/parks/{{ park._id }}/visit?_method=PUT" method="POST">
+            <input type="submit" value="ADD VISIT" class="btn btn-primary">
+        </form>
+        <br><form action="/parks/delete/?_method=DELETE" method="POST">
+            <input type="submit" value="DELETE" class="btn btn-danger">
+        </form> 
+    </div>
     {% endfor %} 
+  </div>
+  
 {% endblock %}
