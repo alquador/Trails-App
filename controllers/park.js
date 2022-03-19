@@ -96,7 +96,8 @@ router.post('/', (req, res) => {
 		fullName: req.body.name, 
 		images: req.body.image,
 		owner: userId,
-		description: req.body.description
+		description: req.body.description,
+		visit: 0
 	    })
 		.then((park) => {
 			console.log('THIS IS THE CREATED PARK: ', park)
@@ -107,9 +108,10 @@ router.post('/', (req, res) => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
-//update route-sends a put request to our database
+
+//UPDATE route-sends a put request to our database
 //Add a visit to the my parks page
-router.put('/:id/visitCounter', (req, res) => {
+router.put('/:id', (req, res) => {
     //get the id
     const parkId = req.params.id
     //tell mongoose to update the product
@@ -118,14 +120,14 @@ router.put('/:id/visitCounter', (req, res) => {
     //now there needs to be a conditional statement
     .then(park => {
         console.log('the updated visits', park)
-        res.redirect(`/parks/${park.id}`)
+        res.redirect(`/parks/mine`)
     })
     //if an error, display that
     .catch(err => res.json(err))
     
 })
 
-// show route
+// SHOW route
 //this route displays all of the parks from the particular state code
 router.get('/:id', (req, res) => {
 	let fullName
@@ -155,7 +157,7 @@ router.get('/:id', (req, res) => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
-// delete route of specifically added park in the user's favorites page
+// DELETE route of specifically added park in the user's favorites page
 //delete route withing parks/mine....
 router.delete(('/:id'), (req, res) => {
 	const parkId = req.params.id

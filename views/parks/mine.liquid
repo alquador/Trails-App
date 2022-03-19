@@ -20,7 +20,7 @@
                 {% endif %}
             </h4>
 <!--Here is where I am trying to implement the VISIT button that will increment-->
-        <br><form action="/{{ park._id }}/visitCounter?_method=PUT" method="POST">
+        <br><form action="/parks/{{ park.id }}?_method=PUT" method="POST">
             <input type="submit" value="ADD VISIT" class="btn btn-primary">
         </form>
 <!--Here is where I am trying to post a COMMENT to a specific user's favorite park-->
