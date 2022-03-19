@@ -161,8 +161,6 @@ router.post('/', (req, res) => {
 //     //$subtract qty: 1 did not work! deletes it
 //     Product.findByIdAndUpdate(parkId, { $inc: {visit: 1} })
 //     //now there needs to be a conditional statement
-//     //if quantity <= 0 OUT OF STOCK should display
-//     //if successful -> redirect to the products page
 //     .then(park => {
 //         console.log('the updated visits', park)
 //         res.redirect(`/mine/${park.id}`)
@@ -178,7 +176,7 @@ router.delete(('/:id'), (req, res) => {
 	Park.findByIdAndRemove(parkId)
 		.then((park) => {
             console.log('this is the response, delete route', park)
-			res.redirect(`/parks/${req.body.parkId}`)
+			res.redirect('/parks/mine')
 		})
 		.catch(error => {
 			res.redirect(`/error?error=${error}`)
