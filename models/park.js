@@ -17,6 +17,7 @@ const parkSchema = new Schema(
 		images: { type: String },
 		description: { type: String },
 		activities: { type: String },
+		visit: { type: Number, min: 0 },
 		owner: {
 			type: Schema.Types.ObjectID,
 			ref: 'User',

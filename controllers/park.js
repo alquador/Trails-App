@@ -32,7 +32,7 @@ const exampleUrl = `${reqUrlFront}${selectedPark}${reqUrlApiKey}`
 
 // Routes
 
-// index ALL
+// INDEX PAGE FOR ALL PARKS
 //this route is displaying the query result from the user entering a state code
 router.get('/', (req, res) => {
 	//console.log('this is the example URL', exampleUrl)
@@ -85,19 +85,44 @@ router.get('/mine', (req, res) => {
 		})
 })
 
-//use this to put the comment here...
-// update route
-router.put('/mine/:id/comments', (req, res) => {
-	const parkId = req.params.id
-	req.body.ready = req.body.ready === 'on' ? true : false
-
-	Park.findByIdAndUpdate(parkId, req.body, { new: true })
+//This is the POST route that logs the selected "favorite park" from user in the db
+//this stems from the action of the hidden form on the show page
+router.post('/', (req, res) => {
+    // destructure user info from req.session
+	//parkId = req.body.parkId
+	console.log('this is the req.body.parkId', req.body.parkId)
+    const { username, userId, loggedIn } = req.session
+	Park.create({ 
+		fullName: req.body.name, 
+		images: req.body.image,
+		owner: userId,
+		description: req.body.description
+	    })
 		.then((park) => {
-			res.redirect(`/parks/${park.id}`)
+			console.log('THIS IS THE CREATED PARK: ', park)
+			//redirecting back to the park show page
+			res.redirect(`/parks/${req.body.parkId}`)
 		})
-		.catch((error) => {
+		.catch(error => {
 			res.redirect(`/error?error=${error}`)
 		})
+})
+//update route-sends a put request to our database
+//Add a visit to the my parks page
+router.put('/:id/visitCounter', (req, res) => {
+    //get the id
+    const parkId = req.params.id
+    //tell mongoose to update the product
+    //$subtract qty: 1 did not work! deletes it
+    Park.findByIdAndUpdate(parkId, { $inc: {visit: 1} })
+    //now there needs to be a conditional statement
+    .then(park => {
+        console.log('the updated visits', park)
+        res.redirect(`/parks/${park.id}`)
+    })
+    //if an error, display that
+    .catch(err => res.json(err))
+    
 })
 
 // show route
@@ -130,45 +155,6 @@ router.get('/:id', (req, res) => {
 			res.redirect(`/error?error=${error}`)
 		})
 })
-//This is the POST route that logs the selected "favorite park" from user in the db
-//this stems from the action of the hidden form on the show page
-router.post('/', (req, res) => {
-    // destructure user info from req.session
-	//parkId = req.body.parkId
-	console.log('this is the req.body.parkId', req.body.parkId)
-    const { username, userId, loggedIn } = req.session
-	Park.create({ 
-		fullName: req.body.name, 
-		images: req.body.image,
-		owner: userId,
-		description: req.body.description
-	    })
-		.then((park) => {
-			console.log('THIS IS THE CREATED PARK: ', park)
-			//redirecting back to the park show page
-			res.redirect(`/parks/${req.body.parkId}`)
-		})
-		.catch(error => {
-			res.redirect(`/error?error=${error}`)
-		})
-})
-// //update route-sends a put request to our database
-// //Add a visit to the my parks page
-// app.put('/:id/mine/visit', (req, res) => {
-//     //get the id
-//     const productId = req.params.id
-//     //tell mongoose to update the product
-//     //$subtract qty: 1 did not work! deletes it
-//     Product.findByIdAndUpdate(parkId, { $inc: {visit: 1} })
-//     //now there needs to be a conditional statement
-//     .then(park => {
-//         console.log('the updated visits', park)
-//         res.redirect(`/mine/${park.id}`)
-//     })
-//     //if an error, display that
-//     .catch(err => res.json(err))
-    
-// })
 // delete route of specifically added park in the user's favorites page
 //delete route withing parks/mine....
 router.delete(('/:id'), (req, res) => {
@@ -229,6 +215,21 @@ module.exports = router
 // 			res.render('parks/show', { park: park})
 // 		})
 // 		.catch(error => {
+// 			res.redirect(`/error?error=${error}`)
+// 		})
+// })
+
+// //use this to put the comment here...
+// // update route
+// router.put('/mine/:id/comments', (req, res) => {
+// 	const parkId = req.params.id
+// 	req.body.ready = req.body.ready === 'on' ? true : false
+
+// 	Park.findByIdAndUpdate(parkId, req.body, { new: true })
+// 		.then((park) => {
+// 			res.redirect(`/parks/${park.id}`)
+// 		})
+// 		.catch((error) => {
 // 			res.redirect(`/error?error=${error}`)
 // 		})
 // })

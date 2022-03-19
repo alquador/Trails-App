@@ -10,12 +10,20 @@
                 <p class="card-text">{{ park.description }}</p>
         <div class="col-md-6 justify-content-center">
 <!--Here is where I am calling on the visits-->
-            {% assign visit = 0 %}
-                {% for visit in visits %}
-                    {% assign visit = visit | plus: 1 %}
-    {% endfor %}
-            Visits: {{ visit }}
-<!--Here is where I am trying to post a comment to a specific user's favorite park-->
+<!--Need to add to the park model -->
+<!--Create a put route -->
+            {% assign visitCounter = park.visit %}
+            <h4>Visits: {% if visitCounter <= 0 %}
+                <p>Need to plan a visit to this park!</p>
+                {% else visitCounter > 0 %}
+                {{ park.visit }}
+                {% endif %}
+            </h4>
+<!--Here is where I am trying to implement the VISIT button that will increment-->
+        <br><form action="/{{ park._id }}/visitCounter?_method=PUT" method="POST">
+            <input type="submit" value="ADD VISIT" class="btn btn-primary">
+        </form>
+<!--Here is where I am trying to post a COMMENT to a specific user's favorite park-->
         <form action="/comments/{{ park.id }}" method="POST">
             <fieldset class="form-label">
                 <legend></legend>
@@ -25,14 +33,7 @@
                     <input type="submit" class="btn btn-success" value="ADD COMMENT">
         </form>
     </div>
-<!--Here is where I am trying to implement the Visit button that will increment-->
-        <br><form action="/parks/{{ park._id }}/visit?_method=PUT" method="POST">
-            <input type="submit" value="ADD VISIT" class="btn btn-primary">
-        </form>
-<!--Here is where I am trying to implement the Delete a specific saved park button-->
-        <br><form action="/parks/{{ park._id }}?_method=DELETE" method="POST">
-            <input type="submit" value="DELETE" class="btn btn-danger">
-        </form> 
+
 <!--Here is where I am trying to push the comments into body of the saved parks index-->  
         {% if park.comments.length > 0 %}
     <div class="container-sm justify-content-center">
@@ -40,12 +41,18 @@
             <!-- here we need to loop over the comments -->
             <!-- for every comment render a comment.liquid block -->
             {% for comment in park.comments %}
-                {% render '../comment.liquid', comment: comment, username: username, park: park %}
+                <br>{% render '../comment.liquid', comment: comment, username: username, park: park %}
             {% endfor %}
         </div>
     </div>
 {% endif %}
+<!--Here is where I am trying to implement the Delete a specific saved park button-->
+<br><form action="/parks/{{ park._id }}?_method=DELETE" method="POST">
+    <input type="submit" value="DELETE PARK" class="btn btn-danger">
+</form> <br>
     </div>
+
+
     {% endfor %} 
   </div>
   
