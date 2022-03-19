@@ -126,6 +126,23 @@ router.put('/:id', (req, res) => {
     .catch(err => res.json(err))
     
 })
+//UPDATE route-sends a put request to our database
+//DELETE a visit to the my parks page
+router.put('/:id', (req, res) => {
+    //get the id
+    const parkId = req.params.id
+    //tell mongoose to update the product
+    //$subtract qty: 1 did not work! deletes it
+    Park.findByIdAndUpdate(parkId, { $inc: {visit: -1} })
+    //now there needs to be a conditional statement
+    .then(park => {
+        console.log('the updated visits', park)
+        res.redirect(`/parks/mine`)
+    })
+    //if an error, display that
+    .catch(err => res.json(err))
+    
+})
 
 // SHOW route
 //this route displays all of the parks from the particular state code

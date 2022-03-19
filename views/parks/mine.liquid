@@ -11,20 +11,27 @@
         <div class="col-md-6 justify-content-center">
 <!--Here is where I am calling on the visits-->
 <!--Need to add to the park model -->
-<!--Create a put route -->
+<!--Create a put route to add a visit -->
             {% assign visitCounter = park.visit %}
-            <h4>Visits: {% if visitCounter <= 0 %}
-                <p>Need to plan a visit to this park!</p>
-                {% else visitCounter > 0 %}
-                {{ park.visit }}
-                {% endif %}
+            {% assign visitDecrement = park.visit | minus: 1 %}
+        <h4>Visits:{% if visitCounter <= 0 %} Need to plan a visit to this park!
+                {% elsif visitCounter > 0 %}
+                    {{ park.visit }}
+                {% elsif visitDecrement >= 1 %}
+                    {{ park.visit | minus: 1 }}
+                {% else %}
+            {% endif %}
             </h4>
 <!--Here is where I am trying to implement the VISIT button that will increment-->
-        <br><form action="/parks/{{ park.id }}?_method=PUT" method="POST">
+        <form action="/parks/{{ park.id }}?_method=PUT" method="POST">
             <input type="submit" value="ADD VISIT" class="btn btn-primary">
         </form>
+<!--Here is where I am trying to implement DELETE VISIT button that will decrement just in case the user adds visit by accident-->   
+        <!-- <br><form action="/parks/{{ park.id }}?_method=PUT" method="POST">
+             <input type="submit" value="DELETE VISIT" class="btn btn-danger">
+        </form> -->
 <!--Here is where I am trying to post a COMMENT to a specific user's favorite park-->
-        <form action="/comments/{{ park.id }}" method="POST">
+     <br><form action="/comments/{{ park.id }}" method="POST">
             <fieldset class="form-label">
                 <legend></legend>
                 <label class="form-label">Comment: </label>
@@ -57,3 +64,4 @@
   </div>
   
 {% endblock %}
+
