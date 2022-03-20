@@ -17,7 +17,9 @@ const parkSchema = new Schema(
 		images: { type: String },
 		description: { type: String },
 		activities: { type: String },
-		visit: { type: Number, min: 0 },
+		//adding default zero would create the visit if no
+		//data was available...
+		visit: { type: Number, min: 0, default: 0 },
 		owner: {
 			type: Schema.Types.ObjectID,
 			ref: 'User',

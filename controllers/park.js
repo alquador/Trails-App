@@ -111,7 +111,7 @@ router.post('/', (req, res) => {
 
 //UPDATE route-sends a put request to our database
 //Add a visit to the my parks page
-router.put('/:id', (req, res) => {
+router.put('/incVis/:id', (req, res) => {
     //get the id
     const parkId = req.params.id
     //tell mongoose to update the product
@@ -128,7 +128,7 @@ router.put('/:id', (req, res) => {
 })
 //UPDATE route-sends a put request to our database
 //DELETE a visit to the my parks page
-router.put('/:id', (req, res) => {
+router.put('/decVis/:id', (req, res) => {
     //get the id
     const parkId = req.params.id
     //tell mongoose to update the product

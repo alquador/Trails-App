@@ -23,13 +23,13 @@
             {% endif %}
             </h4>
 <!--Here is where I am trying to implement the VISIT button that will increment-->
-        <form action="/parks/{{ park.id }}?_method=PUT" method="POST">
+        <form action="/parks/incVis/{{ park.id }}?_method=PUT" method="POST">
             <input type="submit" value="ADD VISIT" class="btn btn-primary">
         </form>
 <!--Here is where I am trying to implement DELETE VISIT button that will decrement just in case the user adds visit by accident-->   
-        <!-- <br><form action="/parks/{{ park.id }}?_method=PUT" method="POST">
+        <br><form action="/parks/decVis/{{ park.id }}?_method=PUT" method="POST">
              <input type="submit" value="DELETE VISIT" class="btn btn-danger">
-        </form> -->
+        </form> 
 <!--Here is where I am trying to post a COMMENT to a specific user's favorite park-->
      <br><form action="/comments/{{ park.id }}" method="POST">
             <fieldset class="form-label">

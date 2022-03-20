@@ -18,9 +18,12 @@
 }
 .container-md {
     color: black;
+    justify-content: center;
 }
 #show-page-div {
     background-color: lightblue;
+    justify-content: center;
+    align-content: center;
     text-align: center;
     color: black;
     align-items: center;
@@ -52,3 +55,10 @@
     flex-direction: row wrap;
     flex-flow: space-around;
 } 
+.carousel-inner, .carousel-slide, .carousel-inner {
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    max-width: 1000px;
+    max-height: 500px;
+}
