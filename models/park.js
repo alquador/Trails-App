@@ -17,6 +17,8 @@ const parkSchema = new Schema(
 		images: { type: String },
 		description: { type: String },
 		activities: { type: String },
+		directionsInfo: { type: String },
+		directionsUrl: { type: String },
 		//adding default zero would create the visit if no
 		//data was available...
 		visit: { type: Number, min: 0, default: 0 },

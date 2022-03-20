@@ -20,7 +20,7 @@
                   <div class="carousel-item">
                     <img src="{{ park.images[4].url }}" class="d-block w-100" alt="Image Not Available">
                   </div>
-                </div>
+            </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Previous</span>
@@ -34,11 +34,16 @@
               <h1 class="card-title">{{ park.fullName }}</h1>
              </div>
              <div class ="table-responsive-md"></div>
-             Park Activities:<table class="table"></table>{% for activity in park.activities %}
-             <tr>{{ activity.name }}</tr>
-             {% endfor %}
-             </table>
-           </div>
+                Park Activities:
+                <table class="table"></table>
+                    {% for activity in park.activities %}
+                        <tr>{{ activity.name }}</tr>
+                    {% endfor %}
+                </table><br>
+            <br>Directions information:<br> 
+                    <br>{{ park.directionsInfo }}
+                    <br><a href="{{ park.directionsUrl }}"></a>
+            </div>
 
             <!-- here is my hidden form action for adding parks to favorite parks page -->
             {% if park.owner == userId %}
@@ -48,6 +53,8 @@
                     <input type="hidden" name="image" value="{{ park.images[0].url }}">
                     <input type="hidden" name="parkId" value="{{ parkId }}">
                     <input type="hidden" name="description" value="{{ park.description }}">
+                    <input type="hidden" name="directionsUrl" value="{{ park.directionsUrl }}">
+                    <input type="hidden" name="directionsinfo" value="{{ park.directionsInfo }}">
                     <input type="submit" class="btn btn-primary" value="Add to Favorite Parks">
                     </form>
             </div>

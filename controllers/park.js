@@ -30,7 +30,7 @@ let selectedPark = ''
 const exampleUrl = `${reqUrlFront}${selectedPark}${reqUrlApiKey}`
 
 
-// Routes
+// ROUTES
 
 // INDEX PAGE FOR ALL PARKS
 //this route is displaying the query result from the user entering a state code
@@ -67,7 +67,7 @@ router.get('/', (req, res) => {
 })
 
 // index that shows the user's saved favorite parks
-//Maybe I need a GET route that links to my database....
+//I need a GET route that links to my database....
 //saves or POSTs to /parks/mine route...
 router.get('/mine', (req, res) => {
 	const parkId = req.params.parkId
@@ -97,6 +97,8 @@ router.post('/', (req, res) => {
 		images: req.body.image,
 		owner: userId,
 		description: req.body.description,
+		directionsUrl: req.body.directionsUrl,
+		directionsInfo: req.body.directionsInfo,
 		visit: 0
 	    })
 		.then((park) => {
@@ -110,7 +112,7 @@ router.post('/', (req, res) => {
 })
 
 //UPDATE route-sends a put request to our database
-//Add a visit to the my parks page
+//ADD a visit to the my parks page
 router.put('/incVis/:id', (req, res) => {
     //get the id
     const parkId = req.params.id
@@ -152,6 +154,8 @@ router.get('/:id', (req, res) => {
 	let images
 	let activities
 	let entranceFees
+	let directionsUrl
+	let directionsInfo
 	const parkId = req.params.id
 	const requestUrl = `https://developer.nps.gov/api/v1/parks?parkCode=${parkId}&api_key=3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6`
 	axios.get(requestUrl)
@@ -165,8 +169,9 @@ router.get('/:id', (req, res) => {
 			let activities = jsonData.data.data.activities
 			let images = jsonData.data.data[0].images[0].url
 			let entranceFees = jsonData.data.data[0].entranceFees
-			//console.log('ENTRANCE FEES', entranceFees)
-			//console.log(Park.find({}))
+			let directionsUrl = jsonData.data.data[0].directionsUrl
+			let directionsInfo = jsonData.data.data[0].directionsInfo
+			console.log('directions info:', directionsInfo)
 			console.log(typeof parkId)
 			res.render('parks/show', { park: park, parkId})
 		})

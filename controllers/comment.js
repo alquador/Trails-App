@@ -20,8 +20,6 @@ const router = express.Router()
 // POST -> to create a comment
 router.post('/:parkId', (req, res) => {
     const parkId = req.params.parkId
-    //let note 
-    //let author
     //const parkId = Park.findById(req.params.parkId)
     //JSON.stringify(parkId)
     //console.log('IS THIS A VALID OBJECT ID:', mongoose.Types.ObjectId.isValid('2B14155F-0E31-43F3-8B87-8B1DA6FA0BF7'))
@@ -31,7 +29,7 @@ router.post('/:parkId', (req, res) => {
     // the author's id will be the logged in user's id
     req.body.author = req.session.userId
     console.log('updated comment body', req.body)
-    // we'll find the fruit with the fruitId
+    // we'll find the park by the parkId
     //find one by id and then if it doesn't exist create it
     //then push comment into the comments array
     //input field for the add comment form has a name of "note"!

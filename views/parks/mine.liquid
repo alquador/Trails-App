@@ -4,43 +4,52 @@
 <!--Here is where I am making the favorite parks render-->
     {% for park in parks %}
         <div class="card">
-            <h5 class="card-header">{{ park.fullName }}</h5>
+            <h5 class="card-header">{{ park.fullName }}
+                <!--Here is where I am trying to implement the Delete a specific saved park button-->
+                <form action="/parks/{{ park._id }}?_method=DELETE" method="POST">
+                <input type="submit" value="DELETE PARK" class="btn btn-danger">
+                </form>
+            </h5>
                 <div class="card-body">
-            <h5 class="card-title">Description:</h5>
-                <p class="card-text">{{ park.description }}</p>
-        <div class="col-md-6 justify-content-center">
+                    <img src="{{ park.images[1].url }}">
+        <div id="visit-comment-div" class="col-md-6 justify-content-center">
 <!--Here is where I am calling on the visits-->
 <!--Need to add to the park model -->
 <!--Create a put route to add a visit -->
+        <div id="visit">       
             {% assign visitCounter = park.visit %}
             {% assign visitDecrement = park.visit | minus: 1 %}
-        <h4>Visits:{% if visitCounter <= 0 %} Need to plan a visit to this park!
-                {% elsif visitCounter > 0 %}
-                    {{ park.visit }}
-                {% elsif visitDecrement >= 1 %}
-                    {{ park.visit | minus: 1 }}
-                {% else %}
-            {% endif %}
-            </h4>
+                <h4>Visits:
+                    {% if visitCounter <= 0 %} 
+                        Need to plan a visit to this park!
+                    {% elsif visitCounter > 0 %}
+                        {{ park.visit }}
+                    {% elsif visitDecrement >= 1 %}
+                        {{ park.visit | minus: 1 }}
+                    {% else %}
+                    {% endif %}
+                </h4>
+          <!--<h6>{{ park.directionsUrl }}</h3>NOT WORKING--> 
 <!--Here is where I am trying to implement the VISIT button that will increment-->
-        <form action="/parks/incVis/{{ park.id }}?_method=PUT" method="POST">
+      <br><form action="/parks/incVis/{{ park.id }}?_method=PUT" method="POST">
             <input type="submit" value="ADD VISIT" class="btn btn-primary">
         </form>
 <!--Here is where I am trying to implement DELETE VISIT button that will decrement just in case the user adds visit by accident-->   
         <br><form action="/parks/decVis/{{ park.id }}?_method=PUT" method="POST">
              <input type="submit" value="DELETE VISIT" class="btn btn-danger">
         </form> 
+        </div> 
 <!--Here is where I am trying to post a COMMENT to a specific user's favorite park-->
-     <br><form action="/comments/{{ park.id }}" method="POST">
+        <div id="comment">
+        <form action="/comments/{{ park.id }}" method="POST">
             <fieldset class="form-label">
                 <legend></legend>
-                <label class="form-label">Comment: </label>
+               <h4><label class="form-label">Comment: </label></h4>
                     <input type="text" class="form-control" name="note" placeholder="enter comment here...">
             </fieldset>
                     <input type="submit" class="btn btn-success" value="ADD COMMENT">
         </form>
-    </div>
-
+        
 <!--Here is where I am trying to push the comments into body of the saved parks index-->  
         {% if park.comments.length > 0 %}
     <div class="container-sm justify-content-center">
@@ -53,10 +62,8 @@
         </div>
     </div>
 {% endif %}
-<!--Here is where I am trying to implement the Delete a specific saved park button-->
-<br><form action="/parks/{{ park._id }}?_method=DELETE" method="POST">
-    <input type="submit" value="DELETE PARK" class="btn btn-danger">
-</form> <br>
+</div>
+</div>
     </div>
 
 
