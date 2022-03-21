@@ -4,8 +4,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
-// we need our Fruit MODEL because comments are ONLY a schema
-// so we'll run queries on fruits, and add in comments
+// we need our park MODEL because comments are ONLY a schema
+// run queries on parks, and add in comments
 const Park = require('../models/park')
 
 ////////////////////////////////////////////
@@ -61,7 +61,7 @@ router.delete('/delete/:parkId/:commId', (req, res) => {
     // first we want to parse out our ids
     const parkId = req.params.parkId
     const commId = req.params.commId
-    // then we'll find the fruit
+    // find the park
     Park.findById(parkId)
         .then(park => {
             const theComment = park.comments.id(commId)
@@ -69,7 +69,7 @@ router.delete('/delete/:parkId/:commId', (req, res) => {
             if ( theComment.author == req.session.userId) {
                 // then we'll delete the comment
                 theComment.remove()
-                // return the saved fruit
+                // return the saved park
                 return park.save()
             } else {
                 return

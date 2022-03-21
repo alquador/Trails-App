@@ -27,6 +27,7 @@ const reqUrlFront = 'https://developer.nps.gov/api/v1/parks'
 const reqUrlApiKey = '&api_key=3OP6Ah2wdAocReevQiT5VXL3YK37IiLrNaFlEUw6'
 let defaultState = '?stateCode=co'
 let selectedPark = ''
+//the example url helped me break down what the axios request grabs
 const exampleUrl = `${reqUrlFront}${selectedPark}${reqUrlApiKey}`
 
 
