@@ -1,5 +1,5 @@
 # National Parks
-An application that allows users to currently search National Parks by state code.  There are more versions and functionality to come!  I would love to incorporate a hiking trail API in conjunction with the National Park API. Thank you to the National Park Services API information provided and powering my app!
+An application that allows users to currently search National Parks by state code.  There are more versions and functionality to come!  I would love to incorporate a hiking trail API in conjunction with the National Park API. Thank you to the National Park Services API information provided and powering my app! https://www.nps.gov/subjects/developer/api-documentation.htm
 
 # Installation Instructions
 1. Clone this repository.
@@ -16,11 +16,36 @@ An application that allows users to currently search National Parks by state cod
 
 # CRUD Functionality
 
+## Park Routes
 
-| VERB | URL Pattern | ACTION |      DESCRIPTION      |  MODEL |  
-| :--- |    :----:   |   ---: |         ---:          |  ---:  |
-| GET  |   /parks    |  Index |  Retrieve Park Index  |  Park  |
-| GET  | /parks/mine | Index  | User's favorited parks|  Park  |
+| VERB   |    URL Pattern          | ACTION |      DESCRIPTION         |  MODEL |  
+| :---   |    :----:               |   ---: |         ---:             |  ---:  |
+| GET    |   /parks                |  Read  |  Retrieve Park Index     |  Park  |
+| GET    |   /parks/id             |  Read  |  Shows all Parks         |  Park  |
+| GET    |    /parks/mine          |  Read  | User's favorites parks   |  Park  |
+| POST   |   /parks                | Create | Creates favorites park   |  Park  |
+| PUT    | /parks/incVis/:id       | Update |   Increments a visit     |  Park  |
+| PUT    | /parks/decVis/:id       | Update |   Decrements a visit     |  Park  |
+| DELETE |   /parks/:id            | Delete | Deletes a favorited park |  Park  |
+| POST   |   /parks:id             | Create |   Creates a comment      | Comment|
+| DELETE | /delete/:parkId/:commId | Delete |   Deletes a comment      | Comment|
+| GET    |   /auth/signup          | Create |  Create User signup      |  Auth  |
+| POST   |   /auth/signup          | Create |  Saves user signup info  |  Auth  |
+| GET    |   /auth/login           | Create |    User login form       |  Auth  |
+| POST   |   /auth/login           | Create |  Create user session     |  Auth  |
+
+# Tech Stack
+
+- NPS API - used to render all National Parks by State Code
+- CSS
+- Javascript
+- Express.js
+- Liquid Express Views
+- Mongoose
+- MongoDB
+- Bootstrap
+- Node.js
+
 
 ![alt text](/Trails%20(1).jpg)
 
